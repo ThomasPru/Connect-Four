@@ -2,7 +2,7 @@ package game;
 
 import java.util.Scanner;
 
-import game.Board;
+import game.Engine;
 
 public class Player {
 	private String name;
@@ -15,7 +15,7 @@ public class Player {
 		this.id = id;
 	}
 	
-	public void jouerUnCoup(Board b) {
+	public void jouerUnCoup(Engine b) {
 		int hauteur = 0;
 		int column;
 		

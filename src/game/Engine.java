@@ -1,10 +1,14 @@
 package game;
 
-public class Board {
+import java.util.ArrayList;
+
+public class Engine implements Observable{
 	protected int tab[][];
 	private int current_turn;
+	private ArrayList tabObservateur;
 	
-	public Board(int startinPlayer) {
+	public Engine(int startinPlayer) {
+		tabObservateur=new ArrayList();
 		this.tab = new int[6][7];
 		this.current_turn = startinPlayer;
 		
@@ -22,6 +26,7 @@ public class Board {
 		else {
 			this.current_turn = 1;	
 		}
+		
 	}
 	
 	public int[][] getBoard() {
@@ -57,6 +62,7 @@ public class Board {
 			}
 			System.out.println();
 		}
+		notifierObservateurs();
 	}
 	
 
@@ -159,6 +165,24 @@ public class Board {
 		
 		
 		return winner;
+	}
+
+	@Override
+	public void ajouterObservateur(Observateur o) {
+		tabObservateur.add(o);
+	}
+
+	@Override
+	public void supprimerObservateur(Observateur o) {
+		tabObservateur.remove(o);
+	}
+
+	@Override
+	public void notifierObservateurs() {
+		for(int i = 0; i < tabObservateur.size(); i++) {
+			Observateur o = (Observateur) tabObservateur.get(i);
+            o.actualiser(this);// On utilise la méthode "tiré".
+		}
 	}
 }
 
